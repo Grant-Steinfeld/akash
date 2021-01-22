@@ -199,3 +199,32 @@ func requestLogParams() mux.MiddlewareFunc {
 		})
 	}
 }
+
+func requestLeaseEventsParams() mux.MiddlewareFunc {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+			vars := req.URL.Query()
+
+			var err error
+
+			defer func() {
+				if err != nil {
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
+			}()
+
+			follow := false
+			if val := vars.Get("follow"); val != "" {
+				follow, err = strconv.ParseBool(val)
+				if err != nil {
+					return
+				}
+			}
+
+			context.Set(req, logFollowContextKey, follow)
+
+			next.ServeHTTP(w, req)
+		})
+	}
+}

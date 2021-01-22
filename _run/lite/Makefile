@@ -37,3 +37,10 @@ provider-service-logs:
 		--service   "web"            \
 		--from      "$(KEY_NAME)" \
 		--provider  "$(PROVIDER_ADDRESS)"
+
+.PHONY: provider-lease-events
+provider-lease-events:
+	$(AKASHCTL) "$(KEY_OPTS)" provider lease-events -f \
+		--dseq "$(DSEQ)"     \
+		--from "$(KEY_NAME)" \
+		--provider "$(PROVIDER_ADDRESS)"

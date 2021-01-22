@@ -63,7 +63,17 @@ provider-lease-status:
 
 .PHONY: provider-lease-logs
 provider-lease-logs:
-	$(AKASHCTL) "$(KEY_OPTS)" provider service-logs --service web -f \
+	$(AKASHCTL) "$(KEY_OPTS)" provider service-logs \
+		--service web        \
+		--follow             \
+		--dseq "$(DSEQ)"     \
+		--from "$(KEY_NAME)" \
+		--provider "$(PROVIDER_ADDRESS)"
+
+.PHONY: provider-lease-events
+provider-lease-events:
+	$(AKASHCTL) "$(KEY_OPTS)" provider lease-events \
+		--follow \
 		--dseq "$(DSEQ)"     \
 		--from "$(KEY_NAME)" \
 		--provider "$(PROVIDER_ADDRESS)"

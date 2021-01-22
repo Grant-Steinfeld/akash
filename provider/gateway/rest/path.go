@@ -27,6 +27,10 @@ func leaseStatusPath(id mtypes.LeaseID) string {
 	return fmt.Sprintf("%s/status", leasePath(id))
 }
 
+func leaseEventsPath(id mtypes.LeaseID) string {
+	return fmt.Sprintf("%s/kubeevents", leasePath(id))
+}
+
 func serviceStatusPath(id mtypes.LeaseID, service string) string {
 	return fmt.Sprintf("%s/service/%s/status", leasePath(id), service)
 }
